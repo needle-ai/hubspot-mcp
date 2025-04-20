@@ -167,13 +167,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/companies/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -279,12 +280,13 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = `/crm/v3/objects/${params.objectType}`
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
+        const queryParams = {
           properties: params.properties?.join(','),
           after: params.after,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           archived: params.archived
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -385,13 +387,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = `/crm/v3/objects/${params.objectType}/search`
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -674,13 +677,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/contacts/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -875,13 +879,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/leads/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -987,13 +992,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/meetings'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
+        const queryParams = {
           after: params.after,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           createdAfter: params.createdAfter,
           createdBefore: params.createdBefore,
           properties: params.properties?.join(',')
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -1106,13 +1112,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/meetings/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -1280,13 +1287,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/notes'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
-          limit: params.limit,
+        const queryParams = {
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
           archived: params.archived
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -1312,13 +1320,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/notes/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -1493,13 +1502,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/tasks'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
-          limit: params.limit,
+        const queryParams = {
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
           archived: params.archived
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -1525,13 +1535,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/tasks/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -1696,13 +1707,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/engagements/v1/engagements/paged'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
-          limit: params.limit,
+        const queryParams = {
+          limit: params.limit ?? 10, // Default limit added
           offset: params.offset,
           startTime: params.startTime,
           endTime: params.endTime,
           activityTypes: params.activityTypes?.join(',')
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -1734,13 +1746,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = `/engagements/v1/engagements/associated/${params.objectType}/${params.objectId}/paged`
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
+        const queryParams = {
           startTime: params.startTime,
           endTime: params.endTime,
           activityTypes: params.activityTypes?.join(','),
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           offset: params.offset
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -1840,13 +1853,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/calls'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
-          limit: params.limit,
+        const queryParams = {
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
           archived: params.archived
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -1872,13 +1886,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/calls/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
@@ -2061,13 +2076,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/emails'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, { // Pass apiKey
-          limit: params.limit,
+        const queryParams = {
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
           archived: params.archived
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
       })
     }
   )
@@ -2093,13 +2109,14 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/emails/search'
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
+        const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit,
+          limit: params.limit ?? 10, // Default limit added
           after: params.after,
           sorts: params.sorts
-        })
+        };
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', requestBody)
       })
     }
   )
