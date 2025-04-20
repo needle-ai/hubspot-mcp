@@ -1,5 +1,8 @@
 # HubSpot MCP
 
+To create a dist for installation use:
+`bun build ./index.js --outdir ./dist`
+
 [![npm version](https://badge.fury.io/js/@shinzolabs%2Fhubspot-mcp.svg)](https://badge.fury.io/js/@shinzolabs%2Fhubspot-mcp)
 [![smithery badge](https://smithery.ai/badge/@shinzo-labs/hubspot-mcp)](https://smithery.ai/server/@shinzo-labs/hubspot-mcp)
 
