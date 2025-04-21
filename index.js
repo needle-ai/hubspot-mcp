@@ -157,7 +157,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -170,7 +170,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -274,7 +274,7 @@ async function createHubspotMcpServer(apiKey) {
       objectType: z.enum(['companies', 'contacts', 'deals', 'tickets', 'products', 'line_items', 'quotes', 'custom']),
       properties: z.array(z.string()).optional(),
       after: z.string().optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       archived: z.boolean().optional()
     },
     async (params) => {
@@ -283,7 +283,7 @@ async function createHubspotMcpServer(apiKey) {
         const queryParams = {
           properties: params.properties?.join(','),
           after: params.after,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           archived: params.archived
         };
         return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
@@ -377,7 +377,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -390,7 +390,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -667,7 +667,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -680,7 +680,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -869,7 +869,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -882,7 +882,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -984,7 +984,7 @@ async function createHubspotMcpServer(apiKey) {
     "List all meetings with optional filtering",
     {
       after: z.string().optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       createdAfter: z.string().optional(),
       createdBefore: z.string().optional(),
       properties: z.array(z.string()).optional()
@@ -994,7 +994,7 @@ async function createHubspotMcpServer(apiKey) {
         const endpoint = '/crm/v3/objects/meetings'
         const queryParams = {
           after: params.after,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           createdAfter: params.createdAfter,
           createdBefore: params.createdBefore,
           properties: params.properties?.join(',')
@@ -1102,7 +1102,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -1115,7 +1115,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -1278,7 +1278,7 @@ async function createHubspotMcpServer(apiKey) {
   mcpServer.tool("notes_list",
     "List all notes with optional filtering",
     {
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       properties: z.array(z.string()).optional(),
       associations: z.array(z.enum(['contacts', 'companies', 'deals', 'tickets'])).optional(),
@@ -1288,7 +1288,7 @@ async function createHubspotMcpServer(apiKey) {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/notes'
         const queryParams = {
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
@@ -1310,7 +1310,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -1323,7 +1323,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -1493,7 +1493,7 @@ async function createHubspotMcpServer(apiKey) {
   mcpServer.tool("tasks_list",
     "List all tasks with optional filtering",
     {
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       properties: z.array(z.string()).optional(),
       associations: z.array(z.enum(['contacts', 'companies', 'deals', 'tickets'])).optional(),
@@ -1503,7 +1503,7 @@ async function createHubspotMcpServer(apiKey) {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/tasks'
         const queryParams = {
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
@@ -1525,7 +1525,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -1538,7 +1538,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -1698,7 +1698,7 @@ async function createHubspotMcpServer(apiKey) {
   mcpServer.tool("engagement_details_list",
     "List all engagements with optional filtering",
     {
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       offset: z.number().optional(),
       startTime: z.string().optional(),
       endTime: z.string().optional(),
@@ -1708,7 +1708,7 @@ async function createHubspotMcpServer(apiKey) {
       return handleEndpoint(async () => {
         const endpoint = '/engagements/v1/engagements/paged'
         const queryParams = {
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           offset: params.offset,
           startTime: params.startTime,
           endTime: params.endTime,
@@ -1740,7 +1740,7 @@ async function createHubspotMcpServer(apiKey) {
       startTime: z.string().optional(),
       endTime: z.string().optional(),
       activityTypes: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       offset: z.number().optional()
     },
     async (params) => {
@@ -1750,7 +1750,7 @@ async function createHubspotMcpServer(apiKey) {
           startTime: params.startTime,
           endTime: params.endTime,
           activityTypes: params.activityTypes?.join(','),
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           offset: params.offset
         };
         return await makeApiRequestWithErrorHandling(apiKey, endpoint, queryParams)
@@ -1844,7 +1844,7 @@ async function createHubspotMcpServer(apiKey) {
   mcpServer.tool("calls_list",
     "List all calls with optional filtering",
     {
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       properties: z.array(z.string()).optional(),
       associations: z.array(z.enum(['contacts', 'companies', 'deals', 'tickets'])).optional(),
@@ -1854,7 +1854,7 @@ async function createHubspotMcpServer(apiKey) {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/calls'
         const queryParams = {
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
@@ -1876,7 +1876,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -1889,7 +1889,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
@@ -2067,7 +2067,7 @@ async function createHubspotMcpServer(apiKey) {
   mcpServer.tool("emails_list",
     "List all emails with optional filtering",
     {
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       properties: z.array(z.string()).optional(),
       associations: z.array(z.enum(['contacts', 'companies', 'deals', 'tickets'])).optional(),
@@ -2077,7 +2077,7 @@ async function createHubspotMcpServer(apiKey) {
       return handleEndpoint(async () => {
         const endpoint = '/crm/v3/objects/emails'
         const queryParams = {
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           properties: params.properties?.join(','),
           associations: params.associations?.join(','),
@@ -2099,7 +2099,7 @@ async function createHubspotMcpServer(apiKey) {
         }))
       })),
       properties: z.array(z.string()).optional(),
-      limit: z.number().min(1).max(100).optional(),
+      limit: z.number().min(1).max(20),
       after: z.string().optional(),
       sorts: z.array(z.object({
         propertyName: z.string(),
@@ -2112,7 +2112,7 @@ async function createHubspotMcpServer(apiKey) {
         const requestBody = {
           filterGroups: params.filterGroups,
           properties: params.properties,
-          limit: params.limit ?? 10, // Default limit added
+          limit: params.limit,
           after: params.after,
           sorts: params.sorts
         };
