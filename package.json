@@ -4,6 +4,7 @@
   "description": "A complete MCP for the HubSpot API",
   "type": "module",
   "main": "index.js",
+  "types": "./index.d.ts",
   "bin": {
     "hubspot-mcp": "./index.js"
   },
