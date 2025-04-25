@@ -69329,6 +69329,130 @@ async function createHubspotMcpServer(apiKey) {
       });
     });
   });
+  mcpServer.tool("cms_list_templates", "List all templates with optional filtering and pagination", {
+    limit: z.number().optional().describe("The number of templates to return. Defaults to 20."),
+    offset: z.number().optional().describe("The offset to start returning from. Defaults to 0."),
+    deleted_at: z.string().optional().describe("Filter by deletion time (exact, gt, lt)"),
+    id: z.string().optional().describe("Filter by exact ID"),
+    is_available_for_new_content: z.boolean().optional().describe("Filter by availability"),
+    label: z.string().optional().describe("Filter by exact label"),
+    path: z.string().optional().describe("Filter by exact path")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = "/content/api/v2/templates";
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, params);
+    });
+  });
+  mcpServer.tool("cms_get_template", "Get a specific template by ID", {
+    template_id: z.string().describe("The unique ID of the template to retrieve")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {});
+    });
+  });
+  mcpServer.tool("cms_get_template_buffer", "Get the current contents of the auto-save buffer for a template", {
+    template_id: z.string().describe("The unique ID of the template")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}/buffer`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {});
+    });
+  });
+  mcpServer.tool("cms_has_buffered_changes", "Check if the auto-save buffer differs from the live template", {
+    template_id: z.string().describe("The unique ID of the template")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}/has-buffered-changes`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {});
+    });
+  });
+  mcpServer.tool("cms_list_template_versions", "List all previous versions of a template", {
+    template_id: z.string().describe("The unique ID of the template")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}/versions`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {});
+    });
+  });
+  mcpServer.tool("cms_get_template_version", "Get a specific revision of a template", {
+    template_id: z.string().describe("The unique ID of the template"),
+    version_id: z.string().describe("The version ID to retrieve")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}/versions/${params.version_id}`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {});
+    });
+  });
+  mcpServer.tool("cms_create_template", "Create a new coded template in Design Manager", {
+    category_id: z.number().describe("Template category type (0-Unmapped, 1-Landing Pages, 2-Email, 3-Blog Post, 4-Site Page)"),
+    folder: z.string().describe("The name of the folder to save the template in"),
+    template_type: z.number().describe("Template type (2-Email, 4-Page, etc)"),
+    path: z.string().describe("The Design Manager path to the directory for the file"),
+    source: z.string().describe("The source code of the template"),
+    is_available_for_new_content: z.boolean().optional().default(false).describe("If true, template can be used with live content")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = "/content/api/v2/templates";
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, "POST", params);
+    });
+  });
+  mcpServer.tool("cms_push_buffer_live", "Copy the contents of the auto-save buffer into the live template", {
+    template_id: z.string().describe("The unique ID of the template")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}/push-buffer-live`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, "POST");
+    });
+  });
+  mcpServer.tool("cms_restore_deleted_template", "Restore a previously deleted template", {
+    template_id: z.string().describe("The unique ID of the template to restore")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}/restore-deleted`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, "POST");
+    });
+  });
+  mcpServer.tool("cms_restore_template_version", "Restore a previous version of the template", {
+    template_id: z.string().describe("The unique ID of the template"),
+    version_id: z.string().describe("The version ID to restore")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}/versions/restore`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, "POST", { version_id: params.version_id });
+    });
+  });
+  mcpServer.tool("cms_update_template", "Update a template (only included fields will be updated)", {
+    template_id: z.string().describe("The unique ID of the template"),
+    source: z.string().optional().describe("The source code of the template"),
+    is_available_for_new_content: z.boolean().optional().describe("If true, template can be used with live content"),
+    folder: z.string().optional().describe("The folder to save the template in"),
+    category_id: z.number().optional().describe("Template category type")
+  }, async (params) => {
+    const { template_id, ...updateParams } = params;
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${template_id}`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, "PUT", updateParams);
+    });
+  });
+  mcpServer.tool("cms_update_template_buffer", "Update the auto-save buffer (won't impact live object)", {
+    template_id: z.string().describe("The unique ID of the template"),
+    source: z.string().describe("The new source code for the template buffer")
+  }, async (params) => {
+    const { template_id, source } = params;
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${template_id}/buffer`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, "PUT", { source });
+    });
+  });
+  mcpServer.tool("cms_delete_template", "Mark a template as deleted (can be restored later)", {
+    template_id: z.string().describe("The unique ID of the template to delete")
+  }, async (params) => {
+    return handleEndpoint(async () => {
+      const endpoint = `/content/api/v2/templates/${params.template_id}`;
+      return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, "DELETE");
+    });
+  });
   return mcpServer;
 }
 export {
