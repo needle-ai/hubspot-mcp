@@ -468,7 +468,8 @@ async function createHubspotMcpServer(apiKey) {
     },
     async (params) => {
       return handleEndpoint(async () => {
-        const endpoint = `/crm/v4/associations/${params.fromObjectType}/${params.toObjectType}/types`
+        // Changed from 'types' to 'labels' as per the v4 API docs
+        const endpoint = `/crm/v4/associations/${params.fromObjectType}/${params.toObjectType}/labels`
         return await makeApiRequestWithErrorHandling(apiKey, endpoint) // Pass apiKey
       })
     }
@@ -509,9 +510,8 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = `/crm/v4/objects/${params.fromObjectType}/${params.fromObjectId}/associations/${params.toObjectType}/${params.toObjectId}`
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'PUT', { // Pass apiKey
-          types: params.associationTypes
-        })
+        // Changed to send an array directly rather than wrapping in a 'types' object
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'PUT', params.associationTypes)
       })
     }
   )
@@ -549,9 +549,8 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = `/crm/v4/associations/${params.fromObjectType}/${params.toObjectType}/batch/create`
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
-          inputs: params.inputs
-        })
+        // Format the inputs according to the v4 API documentation
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', params.inputs)
       })
     }
   )
@@ -569,9 +568,8 @@ async function createHubspotMcpServer(apiKey) {
     async (params) => {
       return handleEndpoint(async () => {
         const endpoint = `/crm/v4/associations/${params.fromObjectType}/${params.toObjectType}/batch/archive`
-        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', { // Pass apiKey
-          inputs: params.inputs
-        })
+        // Format the inputs directly according to the v4 API documentation
+        return await makeApiRequestWithErrorHandling(apiKey, endpoint, {}, 'POST', params.inputs)
       })
     }
   )
